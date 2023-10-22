@@ -1,9 +1,20 @@
-# Node.js
-node_modules
+# Git ignore file
+# See: https://git-scm.com/docs/gitignore
 
-# Logs
-*.log
-*.log.*
-
-# Mac
+# OS
 .DS_Store
+
+# IDE
+.idea
+.vscode
+
+# PNPM
+node_modules
+*.tgz
+
+# Build
+dist
+.tsbuildinfo
+
+# Test
+test.ts

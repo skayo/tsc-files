@@ -1,26 +1,73 @@
 {
-  "name": "tsc-files",
-  "version": "0.0.0",
+  "name": "@skayo/tsc-files",
+  "version": "1.0.0",
   "description": "A tiny tool to run tsc on specific files without ignoring tsconfig.json",
+  "homepage": "https://github.com/skayo/tsc-files#readme",
+  "bugs": "https://github.com/skayo/tsc-files/issues",
   "license": "MIT",
-  "author": "Gustavo P. Cardoso <https://twitter.com/gustavo_pch>",
-  "repository": "github:gustavopch/tsc-files",
-  "bin": {
-    "tsc-files": "cli.js"
-  },
-  "files": [
-    "cli.js"
-  ],
-  "prettier": {
-    "arrowParens": "avoid",
-    "semi": false,
-    "singleQuote": true,
-    "trailingComma": "all"
-  },
-  "peerDependencies": {
-    "typescript": ">=3"
+  "author": "Jonas Geiler <contact@skayo.dev> (https://skayo.dev)",
+  "repository": "github:skayo/tsc-files",
+  "scripts": {
+    "lint": "xo",
+    "fix": "xo --fix",
+    "check": "tsc",
+    "prepare": "husky install"
   },
   "devDependencies": {
-    "typescript": "5.2.2"
-  }
+    "@commitlint/cli": "^17.8.0",
+    "@commitlint/config-conventional": "^17.8.0",
+    "@types/node": "^20.8.2",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.0.1",
+    "typescript": "^5.2.2",
+    "xo": "^0.56.0"
+  },
+  "type": "module",
+  "module": "./index.js",
+  "bin": "./index.js",
+  "exports": {
+    ".": "./index.js",
+    "./package.json": "./package.json"
+  },
+  "sideEffects": false,
+  "files": [
+    "./index.js"
+  ],
+  "engines": {
+    "node": "^18 || >=20"
+  },
+  "xo": {
+    "rules": {
+      "object-curly-spacing": [
+        "error",
+        "always"
+      ],
+      "array-bracket-spacing": [
+        "error",
+        "always"
+      ],
+      "no-new-func": "off"
+    }
+  },
+  "lint-staged": {
+    "*.{js,mjs,cjs,jsx,ts,mts,cts,tsx}": [
+      "xo",
+      "node ./index.js"
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "keywords": [
+    "tsc-files",
+    "tsc",
+    "typescript",
+    "check",
+    "type-check",
+    "compile",
+    "tsconfig",
+    "lint-staged"
+  ]
 }
