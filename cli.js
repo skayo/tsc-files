@@ -151,7 +151,11 @@ if (process.versions.pnp) {
 const result = childProcess.spawnSync(
 	tsc,
 	[ '-p', temporaryTsconfigPath, ...remainingArgsToForward ],
-	{ stdio: 'inherit', shell: process.platform === 'win32' },
+	{
+		stdio: 'inherit',
+		env: { ...process.env },
+		shell: process.platform === 'win32',
+	},
 );
 
 // Check if tsc failed to spawn
