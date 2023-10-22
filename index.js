@@ -47,10 +47,23 @@ const argsProjectValue = argsProjectIndex === -1
 	? undefined
 	: args[argsProjectIndex + 1];
 
-// Get the files to type-check
+// Get the files to type-check and check if we should show the help message
 const files = args.filter(file => /\.(js|mjs|cjs|jsx|ts|mts|cts|tsx)$/.test(file));
-if (files.length === 0) {
-	console.log('No files found.');
+if (args.includes('-h') || args.includes('--help') || files.length === 0) {
+	console.log(`
+Usage: tsc-files [files...] [options]
+
+Options:
+  -p, --project [project]     Path to the tsconfig.json file
+  -h, --help                  Show this help message
+
+  See \`tsc --help\` for more options.
+
+Examples:
+  $ tsc-files -p tsconfig.lint.json index.ts
+
+  $ tsc-files --noEmit --allowJs index.js
+`);
 	process.exit(0);
 }
 

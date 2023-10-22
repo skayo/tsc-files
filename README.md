@@ -1,17 +1,15 @@
 # tsc-files
 
-![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/gustavopch/tsc-files/release.yml?style=flat-square)
-
 A tiny tool to run `tsc` on specific files without ignoring `tsconfig.json`.
 
 ## Installation
 
 ```sh
-npm i -D tsc-files
+npm i -D @skayo/tsc-files
 ```
 
 ```sh
-yarn add -D tsc-files
+yarn add -D @skayo/tsc-files
 ```
 
 ## Why
@@ -37,7 +35,3 @@ With lint-staged:
 ## How it works
 
 For the most part, it just forwards all arguments to `tsc` with one exception: the specified files will not be forwarded — instead, they will be put at the `files` property of a temporary config that will be generated next to your original `tsconfig.json`. Other than that, just read `tsc --help`.
-
-## License
-
-Released under the [MIT License](./LICENSE.md).
