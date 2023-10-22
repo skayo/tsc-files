@@ -1,6 +1,6 @@
 {
   "name": "@jonasgeiler/tsc-files",
-  "version": "2.2.2",
+  "version": "2.2.3",
   "description": "A tiny tool to run tsc on specific files without ignoring tsconfig.json",
   "homepage": "https://github.com/skayo/tsc-files#readme",
   "bugs": "https://github.com/skayo/tsc-files/issues",
