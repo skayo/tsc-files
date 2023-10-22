@@ -1,11 +1,11 @@
 {
-  "name": "@skayo/tsc-files",
-  "version": "2.1.0",
+  "name": "@jonasgeiler/tsc-files",
+  "version": "2.2.0",
   "description": "A tiny tool to run tsc on specific files without ignoring tsconfig.json",
   "homepage": "https://github.com/skayo/tsc-files#readme",
   "bugs": "https://github.com/skayo/tsc-files/issues",
   "license": "MIT",
-  "author": "Jonas Geiler <contact@skayo.dev> (https://skayo.dev)",
+  "author": "Jonas Geiler <npm@jonasgeiler.com> (https://skayo.dev)",
   "repository": "github:skayo/tsc-files",
   "scripts": {
     "lint": "xo",

@@ -5,11 +5,11 @@ A tiny tool to run `tsc` on specific files without ignoring `tsconfig.json`.
 ## Installation
 
 ```sh
-npm i -D @skayo/tsc-files
+npm i -D @jonasgeiler/tsc-files
 ```
 
 ```sh
-yarn add -D @skayo/tsc-files
+yarn add -D @jonasgeiler/tsc-files
 ```
 
 ## Why
