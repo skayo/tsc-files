@@ -1,0 +1,17 @@
+# GitHub Dependabot configuration
+# See: https://docs.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
+
+version: 2
+updates:
+
+  # Maintain dependencies for (p)npm
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: daily
+      time: '11:00'
+      timezone: Europe/Vienna
+    reviewers:
+      - skayo
+    assignees:
+      - skayo
