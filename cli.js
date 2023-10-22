@@ -102,6 +102,9 @@ fs.writeFileSync(
 		files,
 		include: [],
 	}, undefined, 2),
+	{
+		flag: 'wx', // Fail if the file already exists
+	},
 );
 
 // Attach cleanup handlers to remove the temporary config file on exit
