@@ -78,7 +78,7 @@ const tsconfigPath = argsProjectValue || resolveFromRoot('tsconfig.json');
 const tsconfigContent = fs.readFileSync(tsconfigPath).toString();
 
 // Evaluate the content as JS to support comments in the config file
-const tsconfig = new Function(`return ${tsconfigContent}`)();
+const tsconfig = new Function(`return (\n${tsconfigContent}\n);`)();
 
 // Get a temporary tsconfig file path
 let temporaryTsconfigPath = resolveFromRoot(
