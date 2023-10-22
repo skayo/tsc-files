@@ -80,20 +80,28 @@ const tsconfigContent = fs.readFileSync(tsconfigPath).toString();
 // Evaluate the content as JS to support comments in the config file
 const tsconfig = new Function(`return ${tsconfigContent}`)();
 
+// Get a temporary tsconfig file path
+let temporaryTsconfigPath = resolveFromRoot(
+	`tsconfig.tsc-files-${randomChars()}.json`,
+);
+while (fs.existsSync(temporaryTsconfigPath)) {
+	temporaryTsconfigPath = resolveFromRoot(
+		`tsconfig.tsc-files-${randomChars()}.json`,
+	);
+}
+
 // Create a new temporary config file with the files to type-check
-const temporaryTsconfigPath = resolveFromRoot(`tsconfig.${randomChars()}.json`);
-const temporaryTsconfig = {
-	...tsconfig,
-	compilerOptions: {
-		...tsconfig.compilerOptions,
-		skipLibCheck: true,
-	},
-	files,
-	include: [],
-};
 fs.writeFileSync(
 	temporaryTsconfigPath,
-	JSON.stringify(temporaryTsconfig),
+	JSON.stringify({
+		...tsconfig,
+		compilerOptions: {
+			...tsconfig.compilerOptions,
+			skipLibCheck: true,
+		},
+		files,
+		include: [],
+	}, undefined, 2),
 );
 
 // Attach cleanup handlers to remove the temporary config file on exit
