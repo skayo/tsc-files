@@ -15,3 +15,7 @@ updates:
       - skayo
     assignees:
       - skayo
+    groups:
+      commitlint:
+        patterns:
+          - '@commitlint/*'
