@@ -12,6 +12,10 @@ npm i -D @jonasgeiler/tsc-files
 yarn add -D @jonasgeiler/tsc-files
 ```
 
+```sh
+pnpm add -D @jonasgeiler/tsc-files
+```
+
 ## Why
 
 I wanted to type-check **only the staged files** with [lint-staged](https://github.com/okonet/lint-staged).
