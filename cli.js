@@ -89,6 +89,9 @@ while (fs.existsSync(temporaryTsconfigPath)) {
 		`tsconfig.tsc-files-${randomChars()}.json`,
 	);
 }
+// TODO: Use MD5 hash instead of randomChars
+// TODO: Overwrite tsBuildInfoFile path and use a temporary path instead, based on the hash
+// TODO: Maybe try to put the tsconfig.json file in the temporary directory too, check if it NEEDS to be in the project root
 
 // Create a new temporary config file with the files to type-check
 fs.writeFileSync(
