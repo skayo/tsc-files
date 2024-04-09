@@ -13,7 +13,7 @@ devDependencies:
     version: 18.4.2
   '@types/node':
     specifier: ^20.8.2
-    version: 20.9.1
+    version: 20.12.6
   husky:
     specifier: ^8.0.3
     version: 8.0.3
@@ -398,8 +398,8 @@ packages:
       undici-types: 5.26.5
     dev: true
 
-  /@types/node@20.9.1:
-    resolution: {integrity: sha512-HhmzZh5LSJNS5O8jQKpJ/3ZcrrlG6L70hpGqMIAoM9YVD0YBRNWYsfwcXq8VnSjlNpCpgLzMXdiPo+dxcvSmiA==}
+  /@types/node@20.12.6:
+    resolution: {integrity: sha512-3KurE8taB8GCvZBPngVbp0lk5CKi8M9f9k1rsADh0Evdz5SzJ+Q+Hx9uHoFGsLnLnd1xmkDQr2hVhlA0Mn0lKQ==}
     dependencies:
       undici-types: 5.26.5
     dev: true
@@ -2531,7 +2531,7 @@ packages:
     resolution: {integrity: sha512-7vuh85V5cdDofPyxn58nrPjBktZo0u9x1g8WtjQol+jZDaE+fhN+cIvTj11GndBnMnyfrUOG1sZQxCdjKh+DKg==}
     engines: {node: '>= 10.13.0'}
     dependencies:
-      '@types/node': 20.9.1
+      '@types/node': 20.12.6
       merge-stream: 2.0.0
       supports-color: 8.1.1
     dev: true
