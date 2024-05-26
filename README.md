@@ -1,3 +1,6 @@
+> [!NOTE]
+> This is a fork of [`tsc-files`](https://www.npmjs.com/package/tsc-files) which modernizes the whole codebase a bit and implements some unmerged pull requests of the [original repository](https://github.com/gustavopch/tsc-files).
+
 # tsc-files
 
 A tiny tool to run `tsc` on specific files without ignoring `tsconfig.json`.
