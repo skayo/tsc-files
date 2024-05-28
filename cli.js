@@ -5,18 +5,13 @@ import fs from 'node:fs';
 import module from 'node:module';
 import path from 'node:path';
 import process from 'node:process';
+import crypto from 'node:crypto';
 
 // This code is forked from the `tsc-files` package and modified, so it's an
 // ESM module and works with `.js` files and PNPM.
 
 // Create a require function that works with ESM
 const require = module.createRequire(import.meta.url);
-
-/**
- * Generate a random string of characters.
- * @returns {string}
- */
-const randomChars = () => Math.random().toString(36).slice(2);
 
 /**
  * Resolve a path from a module.
@@ -83,39 +78,36 @@ const tsconfigContent = fs.readFileSync(tsconfigPath).toString();
 // Evaluate the content as JS to support comments in the config file
 const tsconfig = new Function(`return (\n${tsconfigContent}\n);`)();
 
-// Get a temporary tsconfig file path
-let temporaryTsconfigPath = resolveFromRoot(
-	`tsconfig.tsc-files-${randomChars()}.json`,
-);
-while (fs.existsSync(temporaryTsconfigPath)) {
-	temporaryTsconfigPath = resolveFromRoot(
-		`tsconfig.tsc-files-${randomChars()}.json`,
-	);
-}
-// TODO: Use MD5 hash instead of randomChars
-// TODO: Overwrite tsBuildInfoFile path and use a temporary path instead, based on the hash
-// TODO: Maybe try to put the tsconfig.json file in the temporary directory too, check if it NEEDS to be in the project root
-
-// Create a new temporary config file with the files to type-check
-fs.writeFileSync(
-	temporaryTsconfigPath,
-	JSON.stringify(
-		{
-			...tsconfig,
-			compilerOptions: {
-				...tsconfig.compilerOptions,
-				skipLibCheck: true,
-			},
-			files,
-			include: [],
-		},
-		undefined,
-		2,
-	),
-	{
-		flag: 'wx', // Fail if the file already exists
+// Create a tsconfig configuration with the files to type-check and hash it
+const temporaryTsconfig = {
+	...tsconfig,
+	compilerOptions: {
+		...tsconfig.compilerOptions,
+		skipLibCheck: true,
 	},
+	files,
+	include: [],
+};
+let temporaryTsconfigHash = crypto
+	.createHash('md5')
+	.update(JSON.stringify(temporaryTsconfig))
+	.digest('hex');
+
+// Add the tsBuildInfoFile to the temporary tsconfig configuration and re-hash
+temporaryTsconfig.compilerOptions.tsBuildInfoFile = resolveFromRoot(
+	`./tsc-files-${temporaryTsconfigHash}.tsbuildinfo`,
 );
+const temporaryTsconfigContent = JSON.stringify(temporaryTsconfig, null, 2);
+temporaryTsconfigHash = crypto
+	.createHash('md5')
+	.update(temporaryTsconfigContent)
+	.digest('hex');
+
+// Create the temporary tsconfig file
+const temporaryTsconfigPath = resolveFromRoot(
+	`./tsconfig.tsc-files-${temporaryTsconfigHash}.json`,
+);
+fs.writeFileSync(temporaryTsconfigPath, temporaryTsconfigContent);
 
 // Attach cleanup handlers to remove the temporary config file on exit
 let didCleanup = false;
@@ -127,6 +119,9 @@ for (const eventName of ['exit', 'SIGHUP', 'SIGINT', 'SIGTERM']) {
 
 		didCleanup = true;
 		fs.unlinkSync(temporaryTsconfigPath);
+		if (fs.existsSync(temporaryTsconfig.compilerOptions.tsBuildInfoFile)) {
+			fs.unlinkSync(temporaryTsconfig.compilerOptions.tsBuildInfoFile);
+		}
 
 		if (eventName !== 'exit') {
 			process.exit(exitCode);
