@@ -1,0 +1,51 @@
+name: Check
+
+on:
+  push:
+    branches:
+      - main
+      - 'renovate/**'
+    paths:
+      - '**.js'
+      - package.json
+      - pnpm-lock.yml
+      - tsconfig.json
+
+  pull_request:
+    branches:
+      - main
+    paths:
+      - '**.js'
+      - package.json
+      - pnpm-lock.yml
+      - tsconfig.json
+
+  workflow_dispatch:
+  workflow_call:
+
+jobs:
+  lint-and-check:
+    name: Lint & Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29 # v4.1.6
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@a3252b78c470c02df07e9d59298aecedc3ccdd6d # v3.0.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8 # v4.0.2
+        with:
+          node-version: 18
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Run lint
+        run: pnpm run lint
+
+      - name: Run check
+        run: pnpm run check
