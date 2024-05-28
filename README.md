@@ -8,15 +8,15 @@ A tiny tool to run `tsc` on specific files without ignoring `tsconfig.json`.
 ## Installation
 
 ```sh
-npm i -D @jonasgeiler/tsc-files
+npm install --save-dev @jonasgeiler/tsc-files
 ```
 
 ```sh
-yarn add -D @jonasgeiler/tsc-files
+yarn add --dev @jonasgeiler/tsc-files
 ```
 
 ```sh
-pnpm add -D @jonasgeiler/tsc-files
+pnpm add --save-dev @jonasgeiler/tsc-files
 ```
 
 ## Why
