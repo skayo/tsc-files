@@ -25,7 +25,9 @@ const randomChars = () => Math.random().toString(36).slice(2);
  * @returns {string}
  */
 const resolveFromModule = (moduleName, ...paths) => {
-	const modulePath = path.dirname(require.resolve(`${moduleName}/package.json`));
+	const modulePath = path.dirname(
+		require.resolve(`${moduleName}/package.json`),
+	);
 	return path.join(modulePath, ...paths);
 };
 
@@ -37,19 +39,18 @@ const resolveFromModule = (moduleName, ...paths) => {
 const resolveFromRoot = (...paths) => path.join(process.cwd(), ...paths);
 
 // Get arguments without the node executable and this script
-const args = process.argv.slice(2);
+const argv = process.argv.slice(2);
 
 // Get the project argument and its value
-const argsProjectIndex = args.findIndex(arg =>
-	[ '-p', '--project' ].includes(arg),
+const argvProjectIndex = argv.findIndex((argument) =>
+	['-p', '--project'].includes(argument),
 );
-const argsProjectValue = argsProjectIndex === -1
-	? undefined
-	: args[argsProjectIndex + 1];
+const argvProjectValue =
+	argvProjectIndex === -1 ? undefined : argv[argvProjectIndex + 1];
 
 // Get the files to type-check and check if we should show the help message
-const files = args.filter(file => /\.(c|m)?(j|t)sx?$/.test(file));
-if (args.includes('-h') || args.includes('--help') || files.length === 0) {
+const files = argv.filter((file) => /\.(c|m)?(j|t)sx?$/.test(file));
+if (argv.includes('-h') || argv.includes('--help') || files.length === 0) {
 	console.log(`
 Usage: tsc-files [files...] [options]
 
@@ -68,13 +69,15 @@ Examples:
 }
 
 // Get the arguments to forward to tsc
-const remainingArgsToForward = args.filter(arg => !files.includes(arg));
-if (argsProjectIndex !== -1) {
-	remainingArgsToForward.splice(argsProjectIndex, 2);
+const remainingArgvToForward = argv.filter(
+	(argument) => !files.includes(argument),
+);
+if (argvProjectIndex !== -1) {
+	remainingArgvToForward.splice(argvProjectIndex, 2);
 }
 
 // Load existing config
-const tsconfigPath = argsProjectValue || resolveFromRoot('tsconfig.json');
+const tsconfigPath = argvProjectValue || resolveFromRoot('tsconfig.json');
 const tsconfigContent = fs.readFileSync(tsconfigPath).toString();
 
 // Evaluate the content as JS to support comments in the config file
@@ -96,15 +99,19 @@ while (fs.existsSync(temporaryTsconfigPath)) {
 // Create a new temporary config file with the files to type-check
 fs.writeFileSync(
 	temporaryTsconfigPath,
-	JSON.stringify({
-		...tsconfig,
-		compilerOptions: {
-			...tsconfig.compilerOptions,
-			skipLibCheck: true,
+	JSON.stringify(
+		{
+			...tsconfig,
+			compilerOptions: {
+				...tsconfig.compilerOptions,
+				skipLibCheck: true,
+			},
+			files,
+			include: [],
 		},
-		files,
-		include: [],
-	}, undefined, 2),
+		undefined,
+		2,
+	),
 	{
 		flag: 'wx', // Fail if the file already exists
 	},
@@ -112,8 +119,8 @@ fs.writeFileSync(
 
 // Attach cleanup handlers to remove the temporary config file on exit
 let didCleanup = false;
-for (const eventName of [ 'exit', 'SIGHUP', 'SIGINT', 'SIGTERM' ]) {
-	process.on(eventName, exitCode => {
+for (const eventName of ['exit', 'SIGHUP', 'SIGINT', 'SIGTERM']) {
+	process.on(eventName, (exitCode) => {
 		if (didCleanup) {
 			return;
 		}
@@ -153,10 +160,10 @@ if (process.versions.pnp) {
 // Type-check our files
 const result = childProcess.spawnSync(
 	tsc,
-	[ '-p', temporaryTsconfigPath, ...remainingArgsToForward ],
+	['-p', temporaryTsconfigPath, ...remainingArgvToForward],
 	{
 		stdio: 'inherit',
-		env: { ...process.env },
+		env: {...process.env},
 		shell: process.platform === 'win32',
 	},
 );

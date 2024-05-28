@@ -9,7 +9,7 @@
   "repository": "github:skayo/tsc-files",
   "scripts": {
     "lint": "xo",
-    "format": "xo --fix",
+    "fix": "xo --fix",
     "check": "tsc",
     "prepare": "husky || true"
   },
@@ -35,15 +35,8 @@
     "pnpm": ">=8"
   },
   "xo": {
+    "prettier": true,
     "rules": {
-      "object-curly-spacing": [
-        "error",
-        "always"
-      ],
-      "array-bracket-spacing": [
-        "error",
-        "always"
-      ],
       "no-new-func": "off"
     }
   },
