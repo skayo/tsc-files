@@ -49,3 +49,6 @@ jobs:
 
       - name: Run check
         run: pnpm run check
+
+      - name: Run self-check
+        run: pnpm run self-check

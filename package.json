@@ -11,6 +11,7 @@
     "lint": "xo",
     "format": "xo --fix",
     "check": "tsc",
+    "self-check": "node ./cli.js cli.js",
     "prepare": "husky || true"
   },
   "devDependencies": {
