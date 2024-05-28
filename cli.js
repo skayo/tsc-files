@@ -131,7 +131,7 @@ for (const eventName of ['exit', 'SIGHUP', 'SIGINT', 'SIGTERM']) {
 
 // Resolve tsc executable
 let tsc = '';
-if (process.versions.pnp) {
+if (process.versions['pnp']) {
 	tsc = 'tsc';
 } else {
 	tsc = resolveFromModule(

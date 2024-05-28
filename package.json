@@ -2,14 +2,14 @@
   "name": "@jonasgeiler/tsc-files",
   "version": "2.2.4",
   "description": "A tiny tool to run tsc on specific files without ignoring tsconfig.json",
-  "homepage": "https://github.com/skayo/tsc-files#readme",
-  "bugs": "https://github.com/skayo/tsc-files/issues",
+  "homepage": "https://github.com/jonasgeiler/tsc-files#readme",
+  "bugs": "https://github.com/jonasgeiler/tsc-files/issues",
   "license": "MIT",
-  "author": "Jonas Geiler <npm@jonasgeiler.com> (https://skayo.dev)",
-  "repository": "github:skayo/tsc-files",
+  "author": "Jonas Geiler <npm@jonasgeiler.com> (https://jonasgeiler.com)",
+  "repository": "github:jonasgeiler/tsc-files",
   "scripts": {
     "lint": "xo",
-    "fix": "xo --fix",
+    "format": "xo --fix",
     "check": "tsc",
     "prepare": "husky || true"
   },
@@ -22,6 +22,10 @@
     "typescript": "^5.4.5",
     "xo": "^0.58.0"
   },
+  "engines": {
+    "node": ">=18"
+  },
+  "packageManager": "pnpm@9.1.3+sha512.7c2ea089e1a6af306409c4fc8c4f0897bdac32b772016196c469d9428f1fe2d5a21daf8ad6512762654ac645b5d9136bb210ec9a00afa8dbc4677843ba362ecd",
   "type": "module",
   "bin": "./cli.js",
   "exports": {
@@ -30,14 +34,11 @@
   "files": [
     "./cli.js"
   ],
-  "engines": {
-    "node": "^18 || >=20",
-    "pnpm": ">=8"
-  },
   "xo": {
     "prettier": true,
     "rules": {
-      "no-new-func": "off"
+      "no-new-func": "off",
+      "dot-notation": "off"
     }
   },
   "lint-staged": {
@@ -60,6 +61,5 @@
     "compile",
     "tsconfig",
     "lint-staged"
-  ],
-  "packageManager": "pnpm@9.1.3+sha512.7c2ea089e1a6af306409c4fc8c4f0897bdac32b772016196c469d9428f1fe2d5a21daf8ad6512762654ac645b5d9136bb210ec9a00afa8dbc4677843ba362ecd"
+  ]
 }

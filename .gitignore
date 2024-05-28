@@ -17,4 +17,4 @@ dist
 .tsbuildinfo
 
 # Test
-test.ts
+test.[tj]s
